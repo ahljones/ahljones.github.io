@@ -1,0 +1,549 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro|Source+Code+Pro|Source+Serif+Pro');
+body, html {
+    margin: 0;
+    padding: 0;
+    background: #FFF;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+#container {
+    background: #f2f2f2;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+}
+#video-container {
+    position: fixed;
+    display: block;
+    width: calc(100vw - 500px);
+    height: calc(100vh - 50px);
+    background-color: #f2f2f2;
+    background-size: auto auto;
+    background-position: center;
+}
+#main-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#main {
+    margin: 0;
+    padding: 0;
+    display: block;
+    position: absolute;
+    background: #f2f2f2;
+}
+#scrubber {
+    position: fixed;
+    background: #FFF;
+    bottom: 0;
+    left: 0;
+}
+#sidebar {
+    background: #fff;
+    padding: 5px;
+    height: 100vh;
+    width: 400px;
+    position: fixed;
+    overflow-y: auto;
+    box-sizing: border-box;
+    max-width: calc(100vw - 36px);
+    border-left: 1px #c9c9c9 solid;
+}
+#sidebar.normal {
+    top: 0;
+    right: 0;
+    max-width: calc(100vw - 36px);
+    padding: 5px;
+}
+#sidebar.hidden {
+    top: 0;
+    right: -100vw;
+    z-index: 4;
+    box-shadow: 0px 0px 20px -5px rgba(0,0,0,0.5);
+    max-width: 0;
+    padding: 0px;
+}
+#sidebar-visibility {
+    position: fixed;
+    top: 30px;
+    margin-right: -2px;
+    width: 30px;
+    height: 30px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background: #FFF;
+    background-size: 40%;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 2;
+    cursor: pointer;
+    border: 1px #c9c9c9 solid;
+    border-right: none;
+}
+#sidebar-visibility.show {
+    background-image: url("icons/show_sidebar.svg");
+}
+#sidebar-visibility.hide {
+    background-image: url("icons/hide_sidebar.svg");
+}
+#graph {
+    background: blue;
+    display: block;
+    width: 100%;
+    height: 300px;
+}
+#table {
+    height: 400px;
+    overflow: hidden;
+    font-family: "Source Sans Pro", sans-serif;
+}
+video, img {
+    display: block;
+    z-index: -333;
+}
+.scale-text {
+    font: 12px "Consolas";
+    display: inline-block;
+    background: transparent;
+    position: relative;
+    z-index: 2;
+}
+input.scale-text {
+    padding: 2px 4px;
+}
+.scale-text.not-editing {
+    border: 2px transparent solid !important;
+    user-select: none;
+    cursor: pointer;
+}
+.scale-text.editing {
+    background: #FFF;
+    color: #000 !important;
+}
+.sidebar-item {
+    margin-bottom: 15px;
+    border-radius: 4px;
+    background: #FFF;
+    box-sizing: border-box;
+    position: relative;
+    padding: 6px;
+    padding-top: 26px;
+    border: 1px #d8d8d8 solid;
+}
+.sidebar-item.hidden {
+    display: none;
+}
+.handle-bar {
+    background: #e8e8e8;
+    display: block;
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    border: 1px #FFF solid;
+    border-bottom: none;
+    border-radius: 4px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    cursor: grab;
+}
+.handle-bar .handle {
+    background: black;
+}
+#toolbox {
+    padding-bottom: 5px;
+}
+#toolbox .option {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    background: #FFF;
+    background-size: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0px;
+    margin-top: 8px;
+    margin-left: 8px;
+    border: 1px #d8d8d8 solid;
+    border-radius: 2px;
+    box-sizing: border-box;
+}
+#toolbox .button:not(.disabled) {
+    cursor: pointer;
+}
+#toolbox .button.disabled {
+    opacity: 0.5;
+}
+#toolbox .button:not(.disabled):hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+#toolbox .button:not(.disabled):active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+#help-fab, #github-fab {
+    position: absolute;
+    background: url("icons/help.svg");
+    background-size: 100%;
+    background-position: center;
+    opacity: 0.5;
+    right: 10px;
+    bottom: 10px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+#github-fab {
+    background-image: url("icons/github.svg");
+    right: 44px;
+}
+
+
+
+#toolbox #new-track-button {
+    background-image: url("icons/track.svg");
+}
+#toolbox #scale-button {
+    background-image: url("icons/scale.svg");
+}
+#toolbox #edit-project-button {
+    background-image: url("icons/settings.svg");
+}
+#toolbox #export-button {
+    background-image: url("icons/export.svg");
+}
+#toolbox #logout-button {
+    background-image: url("icons/logout.svg");
+}
+#toolbox #save-button {
+    background-image: url("icons/save.svg");
+}
+#toolbox #new-project {
+    background-image: url("icons/new_project.svg");
+}
+#toolbox #screen-fit-button {
+    background-image: url("icons/screenfit.svg");
+}
+#toolbox #undo-button {
+    background-image: url("icons/undo.svg");
+}
+#toolbox #redo-button {
+    background-image: url("icons/redo.svg");
+}
+#toolbox #play-pause-button.pause {
+    background-image: url("icons/pause.svg");
+}
+#toolbox #play-pause-button.play {
+    background-image: url("icons/play.svg");
+}
+#toolbox #help-button {
+    background-image: url("icons/help.svg");
+}
+#toolbox #backup-status {
+    background-image: url("icons/backup.svg");
+    transition: all 0.3s;
+}
+
+
+
+
+
+.sidebar-list ul {
+    margin: 0;
+    padding: 0;
+}
+.sidebar-list ul li, .scale-draggable {
+    /* border-bottom: 1px grey solid; */
+    font: 15px "Source Sans Pro", sans-serif;
+    padding: 10px;
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    border-radius: 3px;
+}
+.sidebar-list ul li:last-of-type, .scale-draggable {
+    border: none;
+}
+.sidebar-list ul li:not(.selected):hover {
+    background: #f6f6f6;
+}
+.sidebar-list ul li.selected {
+    background: #e6e6e6;
+}
+.sidebar-list ul li .name, .scale-draggable .name {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+    user-select: none;
+    -moz-user-select: none;
+}
+.dragpart {
+    cursor: grab;
+    display: inline-block;
+}
+.sidebar-list ul li .swath, .scale-draggable .swath {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background: red;
+    vertical-align: middle;
+}
+.sidebar-list ul li .visibility {
+    display: block;
+    float: right;
+    width: 20px;
+    height: 20px;
+    background: url("icons/visible.svg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.sidebar-list ul li .delete {
+    display: block;
+    float: right;
+    width: 20px;
+    height: 20px;
+    background: url("icons/delete.svg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 10px;
+}
+.sidebar-list ul li .visibility.hidden {
+    background: url("icons/hidden.svg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.sidebar-list ul li .scale-display {
+    height: 25px;
+    width: 80px;
+    border: 2px #000 dashed;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    float: right;
+    overflow: hidden;
+}
+
+.scale-display .scale-draggable {
+    padding: 0px;
+    padding-left: 10px;
+}
+.scale-display .scale-draggable .swath {
+    width: 10px;
+    height: 10px;
+}
+
+body > .scale-draggable {
+    display: inline-block;
+    background: #FFF;
+    width: auto !important;
+}
+#modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.295);
+    z-index: 9999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+#modal-container.active {
+    display: flex;
+}
+#modal-container.launch {
+    background: #FFF;
+}
+.modal {
+    position: absolute;
+    background: #FFF;
+    border-radius: 10px;
+    padding: 30px;
+    padding-bottom: 0px;
+    display: none;
+    max-width: calc(100vw - 200px);
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+.modal p {
+    font: 17px "Source Serif Pro", sans-serif;
+    line-height: 1.5em;
+}
+.modal code {
+    background: #f1f1f1;
+    padding: 3px 5px;
+    border-radius: 3px;
+    font: 0.8em "Source Code Pro", monospace;
+    vertical-align: middle;
+    margin: 0px 5px;
+}
+.modal.active {
+    display: block;
+}
+.modal .modal-title {
+    font: 25px "Source Sans Pro", sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.modal .form-item {
+    font: 16px "Source Sans Pro", sans-serif;
+}
+.modal .form-item + .form-item {
+    margin-top: 20px;
+}
+.modal .form-item input:not(.colorpicker) {
+    padding: 8px 10px;
+    border: 1px lightgrey solid;
+    border-radius: 3px;
+}
+.modal .form-item input.colorpicker {
+    background: #FFF;
+    border: none;
+    color: transparent;
+    overflow: hidden;
+    border-radius: 15px;
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.modal .form-item label {
+    margin-right: 20px;
+    vertical-align: middle;
+}
+.modal .form-buttons {
+    text-align: center;
+    margin: 25px 0px;
+}
+.modal .form-buttons button {
+    font: 16px "Source Sans Pro", sans-serif;
+    display: inline-block;
+    background: #00b38c;
+    border: none;
+    color: #FFF;
+    border-radius: 30px;
+    padding: 10px 30px;
+    margin-right: 10px;
+    transition: all 0.2s;
+    vertical-align: middle;
+    min-height: 40.25px;
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.modal .form-buttons button:disabled,
+.modal .form-buttons button[disabled=""] {
+    display: none;
+}
+.modal .form-buttons button:hover {
+    opacity: 0.9;
+}
+.modal .form-buttons button:last-of-type{
+    margin-right: 0px;
+}
+#launch #file-input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#launch input {
+    display: none;
+}
+@keyframes highlightPulse {
+    from {
+        box-shadow: 0px 0px 15px 3px rgba(0, 255, 149, 0.3);
+    }
+    to {
+        box-shadow: 0px 0px 25px 10px rgba(0, 255, 149, 0.4);
+    }
+}
+#launch .area {
+    width: 50vw;
+    height: 50vh;
+    border: 3px rgb(226, 226, 226) solid;
+    border-radius: 20px;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation-direction: alternate;
+    animation-duration: 0.6s;
+    animation-fill-mode: backwards;
+    animation-iteration-count: infinite;
+    transition: all 0.4s;
+    position: relative;
+}
+#launch .area.highlight {
+    animation-name: highlightPulse;
+    border-color: rgb(0, 80, 17);
+    /* background-image: url("upload-icon.png");
+    background-position: center; */
+}
+#launch .area-content {
+    display: block;
+}
+#launch .area .text {
+    display: block;
+    font: 20px "Source Sans Pro", sans-serif;
+    margin-bottom: 20px;
+}
+#launch label.button, #launch button{
+    display: inline-block;
+    border: none;
+    font: 15px "Source Sans Pro", sans-serif;
+    color: rgb(0, 80, 17);
+    background: rgb(0, 255, 149);
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+#launch button:disabled, #launch button[disabled=""] {
+    display: none;
+}
+#launch .launch-buttons:last-child {
+    margin-right: 0;
+}
+#launch .launch-buttons {
+    display: block;
+    text-align: center;
+}
+#launch { 
+    text-align: center;
+}
+#launch #info-link {
+    display: inline-block;
+    text-align: center;
+    font: 17px "Source Sans Pro", sans-serif;
+    color: #707070;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    margin-left: -50px;
+}
+
+#fullscreen-loader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255,255,255,0.9);
+    display: none;
+    cursor: wait;
+}
+#fullscreen-loader.active {
+    display: block;
+}
